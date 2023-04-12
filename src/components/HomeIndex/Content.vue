@@ -1,46 +1,47 @@
 <template>
   <div class="big-box">
 <!--    <div class="item"><img :src="img1" alt=""></div>-->
-    <div class="item" @click="iconClick"><img :src="img2" alt=""></div>
-    <div class="item"><img :src="img3" alt=""></div>
-    <div class="item"><img :src="img4" alt=""></div>
-    <div class="item"><img :src="img5" alt=""></div>
-    <div class="item"><img :src="img6" alt=""></div>
-    <div class="item"><img :src="img7" alt=""></div>
-    <div class="item"><img :src="img8" alt=""></div>
-    <div class="item"><img :src="img9" alt=""></div>
-    <div class="item"><img :src="img99" alt=""></div>
+    <div class="item" @click="iconClick" v-for="(item,index) in gameList" :key="index">
+      <div class="item_position">
+        <img :src="item.iconUrl" alt="">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import img1 from '@/assets/01.webp'
-import img2 from '@/assets/02.webp'
-import img3 from '@/assets/03.webp'
-import img4 from '@/assets/04.webp'
-import img5 from '@/assets/05.webp'
-import img6 from '@/assets/06.webp'
-import img7 from '@/assets/07.webp'
-import img8 from '@/assets/08.webp'
-import img9 from '@/assets/09.webp'
-import img99 from '@/assets/10.webp'
+import request from '@/utils/request.js'
 export default {
   name: "Content",
   data() {
     return {
-      // img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
-      img7,
-      img8,
-      img9,
-      img99,
+      gameList: [], // 游戏列表
     }
   },
+  mounted() {
+    this.getGameList()
+  },
   methods: {
+    // 获取全部游戏列表
+    getGameList() {
+      request({
+        url: '/api/pmm/game/ranking/list',
+        method: 'get',
+        params: {
+          gameType: 1
+        }
+      }).then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        if (code == 1) {
+          this.gameList = dataObj
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
+    // 点击跳转详情
     iconClick() {
       this.$router.push({
         path: '/details',
@@ -76,17 +77,30 @@ export default {
       animation-direction: normal;
       animation-fill-mode: forwards;
       animation-play-state: running;
+      .item_position{
+        z-index: 23;
+      }
     }
 
     .item{
       float: left;
       padding: 10px;
       box-sizing: border-box;
-      img{
+      .item_position{
+        padding-top: 100%;
         width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        border: 2px solid #fff;
+        position: relative;
+        height: 0;
+        z-index: -1;
+        img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 20px;
+          border: 2px solid #fff;
+        }
       }
     }
   }

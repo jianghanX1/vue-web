@@ -361,7 +361,7 @@ export default {
 }
 @media screen and (min-width: 1263px){
   .float-ads {
-    display: block;
+    display: block!important;
   }
 }
 @media screen and (max-width: 1262px){
@@ -584,6 +584,7 @@ export default {
   }
   .main-float {
     .float-ads{
+      display: none;
       position: absolute;
       top: 0;
       right: 0;
