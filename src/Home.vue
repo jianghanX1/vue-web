@@ -41,6 +41,21 @@ export default {
     } else {
       this.screenType = 2
     }
+    // 随机打乱数组
+    let x = [1, 2, 3, 4, 5];
+    function shuffle(arr) {
+      let length = arr.length,
+        randomIndex,
+        temp;
+      while (length) {
+        randomIndex = Math.floor(Math.random() * (length--));
+        temp = arr[randomIndex];
+        arr[randomIndex] = arr[length];
+        arr[length] = temp
+      }
+      return arr;
+    }
+    console.log(shuffle(x))
   }
 }
 </script>

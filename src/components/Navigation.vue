@@ -1,15 +1,11 @@
 <template>
     <div>
       <div class="bj">
-        <div class="title" @click="vigooGamesClick">ViGOO GAMES</div>
-        <div class="nav-list">
-          <div @click="newGamesClick">New Games</div>
-          <div @click="girlGamesClick">Girl Games</div>
-          <div @click="mmorpgClick">MMORPG</div>
-          <div @click="topGames">Top Games</div>
-          <div>New Games</div>
-          <div>New Games</div>
-          <div>New Games</div>
+        <div class="bj_left">
+          <div class="title" @click="vigooGamesClick">ViGOO GAMES</div>
+          <div class="nav-list">
+            <div @click="newGamesClick" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
+          </div>
         </div>
         <div class="search">
           <el-input
@@ -23,14 +19,40 @@
 </template>
 
 <script>
+import request from '@/utils/request.js'
 export default {
   name: 'Banner',
   data () {
     return {
-      searchInput: null
+      searchInput: null,
+      gameTypeList: [], // 游戏分类
     }
   },
+  mounted() {
+    this.getGameType()
+  },
   methods: {
+    // 获取游戏类型
+    getGameType() {
+      request({
+        url: '/api/pmm/system/dict',
+        method: 'get',
+        params: {
+          dictTypes: 'game_type'
+        }
+      }).then((res)=>{
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        const { game_type, game_grade } = dataObj || {}
+        if (code == 1) {
+          this.gameTypeList = game_type
+        } else {
+          this.$message.error('获取游戏类别/分级失败')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
     vigooGamesClick() {
       this.$router.push({
         path: '/'
@@ -39,21 +61,6 @@ export default {
     newGamesClick() {
       this.$router.push({
         path: '/newGames'
-      },()=>{})
-    },
-    girlGamesClick() {
-      this.$router.push({
-        path: '/girlGames'
-      },()=>{})
-    },
-    mmorpgClick() {
-      this.$router.push({
-        path: '/mmorpg'
-      },()=>{})
-    },
-    topGames() {
-      this.$router.push({
-        path: '/topGames'
       },()=>{})
     },
   },
@@ -68,32 +75,36 @@ export default {
     color: #ffffff;
     display: flex;
     justify-content: space-between;
-    .title{
-      min-width: 200px;
-      line-height: 56px;
-      font-size: 18px;
-      font-weight: bold;
-      margin-left: 36px;
-      cursor: pointer;
-    }
-    .nav-list{
-      overflow: hidden;
-      line-height: 56px;
-      div{
-        float: left;
-        margin-left: 15px;
-        padding: 0 15px;
-      }
-      div:hover{
-        background-color: rgba(0,0,0,.1);
-        border-top: 4px solid #fff81a;
+    .bj_left{
+      display: flex;
+      .title{
+        min-width: 200px;
+        line-height: 56px;
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 36px;
         cursor: pointer;
       }
+      .nav-list{
+        overflow: hidden;
+        line-height: 56px;
+        div{
+          float: left;
+          margin-left: 15px;
+          padding: 0 15px;
+        }
+        div:hover{
+          background-color: rgba(0,0,0,.1);
+          border-top: 4px solid #fff81a;
+          cursor: pointer;
+        }
+      }
+    }
+    .search{
+      margin-right: 15px;
     }
   }
-  .search{
-    margin-right: 15px;
-  }
+
   /deep/ .el-input {
     width: 327px;
     margin-top: 7px;
