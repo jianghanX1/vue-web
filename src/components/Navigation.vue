@@ -2,7 +2,7 @@
     <div>
       <div class="bj">
         <div class="bj_left">
-          <div class="title" @click="vigooGamesClick">ViGOO GAMES</div>
+          <div class="title" @click="vigooGamesClick"><i class="el-icon-menu" @click="positionMenuClick"></i> ViGOO GAMES</div>
           <div class="nav-list">
             <div @click="newGamesClick" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
           </div>
@@ -13,6 +13,9 @@
             prefix-icon="el-icon-search"
             v-model="searchInput">
           </el-input>
+        </div>
+        <div class="position" :style="positionMenu ? 'display: block' : 'display: none'">
+          <div @click="newGamesClick" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
         </div>
       </div>
     </div>
@@ -26,12 +29,17 @@ export default {
     return {
       searchInput: null,
       gameTypeList: [], // 游戏分类
+      positionMenu: false, // 菜单展示
     }
   },
   mounted() {
     this.getGameType()
   },
   methods: {
+    positionMenuClick() {
+      this.positionMenu = !this.positionMenu
+      console.log(this.positionMenu);
+    },
     // 获取游戏类型
     getGameType() {
       request({
@@ -69,25 +77,47 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+@media screen and (max-width: 1440px){
+  .bj_left{
+    .title{
+      .el-icon-menu{
+        display: inline-block!important;
+      }
+    }
+  }
+}
   .bj{
     height: 56px;
     background: #f83123;
     color: #ffffff;
     display: flex;
     justify-content: space-between;
+    position: relative;
+    .position{
+      position: absolute;
+      top: 56px;
+      left: 0;
+      background: #f83123;
+      padding: 6px 0;
+      min-width: 184px;
+    }
     .bj_left{
       display: flex;
       .title{
         min-width: 200px;
         line-height: 56px;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
         margin-left: 36px;
         cursor: pointer;
+        .el-icon-menu{
+          display: none;
+        }
       }
       .nav-list{
         overflow: hidden;
         line-height: 56px;
+        font-size: 18px;
         div{
           float: left;
           margin-left: 15px;
