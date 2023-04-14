@@ -2,6 +2,10 @@
   <div v-if="screenType === 2">
     <Navigation></Navigation>
     <router-view></router-view>
+    <div class="end">
+      <a href="/static/mobile/html/privacy_policy.html" target="_blank">Privacy</a>
+      <a href="/static/mobile/html/contact.html" target="_blank">Contact us</a>
+    </div>
   </div>
   <div v-else>
     <StartAndEnd>
@@ -70,5 +74,34 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.end{
+  margin-top: 1rem;
+  height: 1.75rem;
+  background-color: #042697;
+  text-align: center;
+  color: #fff;
+  font-size: .5625rem;
+  line-height: 1.75rem;
+  overflow: hidden;
+  a {
+    text-decoration: none;
+  }
+}
+.end>a:not(:last-child) {
+  margin-right: 1rem;
+}
+.end>a {
+  color: #fff;
+  position: relative;
+}
+.end>a:not(:last-child):before {
+  content: "";
+  height: 0.8125rem;
+  width: 0.0625rem;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -0.65rem;
+}
 </style>
