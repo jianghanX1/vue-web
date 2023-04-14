@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/Home';
 import HomeIndex from '@/components/HomeIndex/Index'; // 首页
-import NewGames from '@/components/NewGames/Index';
+import GameType from '@/components/GameType/Index';
 import Details from '@/components/Details/Index'; // 详情页
 import MobileClassify from '@/components/MobileTerminal/MobileHome/MobileClassify/Index';
 import MobileDetails from '@/components/MobileTerminal/MobileDetails/Index';
@@ -22,9 +22,9 @@ export default new Router({
         name: 'HomeIndex',
         component: HomeIndex,
       },{
-        path: '/newGames',
-        name: 'NewGames',
-        component: NewGames,
+        path: '/gameType',
+        name: 'GameType',
+        component: GameType,
       },{
         path: '/details',
         name: 'Details',

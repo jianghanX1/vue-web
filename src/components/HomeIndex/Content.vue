@@ -1,7 +1,7 @@
 <template>
   <div class="big-box">
 <!--    <div class="item"><img :src="img1" alt=""></div>-->
-    <div class="item" @click="iconClick" v-for="(item,index) in gameList" :key="index">
+    <div class="item" @click="iconClick(item)" v-for="(item,index) in gameList" :key="index">
       <div class="item_position">
         <img :src="item.iconUrl" alt="">
       </div>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import request from '@/utils/request.js'
+import { getGameList } from '@/utils/utils.js'
 export default {
   name: "Content",
   data() {
@@ -19,36 +19,24 @@ export default {
     }
   },
   mounted() {
-    this.getGameList()
+    getGameList().then((res)=>{
+      console.log(res);
+      const { data } = res || {}
+      const { code, data:dataObj } = data || {}
+      if (code == 1) {
+        this.gameList = dataObj
+      }
+    }).catch((err)=>{
+      console.log(err);
+    })
   },
   methods: {
-    // 获取全部游戏列表
-    getGameList() {
-      request({
-        url: '/api/pmm/game/ranking/list',
-        method: 'get',
-        params: {
-          gameType: 1
-        }
-      }).then((res)=>{
-        console.log(res);
-        const { data } = res || {}
-        const { code, data:dataObj } = data || {}
-        if (code == 1) {
-          this.gameList = dataObj
-        }
-      }).catch((err)=>{
-        console.log(err);
-      })
-    },
     // 点击跳转详情
-    iconClick() {
+    iconClick(item) {
       this.$router.push({
         path: '/details',
         query: {
-
-
-
+          gameId: item.gameId
         }
       })
     }

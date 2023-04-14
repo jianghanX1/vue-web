@@ -60,7 +60,7 @@ export default {
     },
     newGamesClick() {
       this.$router.push({
-        path: '/newGames'
+        path: '/gameType'
       },()=>{})
     },
   },

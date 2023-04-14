@@ -1,40 +1,40 @@
 <template>
   <div>
-    <div class="app-list" v-for="(item,index) in arr" :key="index">
+    <div class="app-list" v-for="(item,index) in appGameList" :key="index">
       <div class="app-list-content">
         <div class="content-top">
-          <div class="item" @click="detailsClick"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img7" alt=""></div>
-          <div class="item"><img :src="img8" alt=""></div>
+          <div class="item" @click="detailsClick"><img :src="item[index][0].iconUrl" alt=""></div>
+          <div class="item"><img :src="item[index][1].iconUrl" alt=""></div>
+          <div class="item"><img :src="item[index][2].iconUrl" alt=""></div>
         </div>
         <div class="content-middle" v-if="(index + 1) % 2 !== 0">
           <div class="middle-left">
-            <div class="item"><img :src="img6" alt=""></div>
+            <div class="item"><img :src="item[index][3].iconUrl" alt=""></div>
           </div>
           <div class="middle-right">
-            <div class="item-box"><div class="item"><img :src="img7" alt=""></div></div>
-            <div class="item-box"><div class="item"><img :src="img8" alt=""></div></div>
+            <div class="item-box"><div class="item"><img :src="item[index][4].iconUrl" alt=""></div></div>
+            <div class="item-box"><div class="item"><img :src="item[index][5].iconUrl" alt=""></div></div>
           </div>
           <div></div>
         </div>
         <div class="content-middle" v-if="(index + 1) % 2 === 0">
           <div class="middle-right">
-            <div class="item-box"><div class="item"><img :src="img7" alt=""></div></div>
-            <div class="item-box"><div class="item"><img :src="img8" alt=""></div></div>
+            <div class="item-box"><div class="item"><img :src="item[index][3].iconUrl" alt=""></div></div>
+            <div class="item-box"><div class="item"><img :src="item[index][4].iconUrl" alt=""></div></div>
           </div>
           <div class="middle-left2">
-            <div class="item"><img :src="img6" alt=""></div>
+            <div class="item"><img :src="item[index][5].iconUrl" alt=""></div>
           </div>
           <div></div>
         </div>
         <div class="content-top">
-          <div class="item"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img7" alt=""></div>
-          <div class="item"><img :src="img8" alt=""></div>
+          <div class="item"><img :src="item[index][6].iconUrl" alt=""></div>
+          <div class="item"><img :src="item[index][7].iconUrl" alt=""></div>
+          <div class="item"><img :src="item[index][8].iconUrl" alt=""></div>
         </div>
         <div class="content-bottom">
-          <div class="item-box"><div class="item"><img :src="img7" alt=""></div></div>
-          <div class="item-box"><div class="item"><img :src="img7" alt=""></div></div>
+          <div class="item-box"><div class="item"><img :src="item[index][9].iconUrl" alt=""></div></div>
+          <div class="item-box"><div class="item"><img :src="item[index][10].iconUrl" alt=""></div></div>
         </div>
       </div>
       <div class="adv" v-if="index === 0"><h6 class="adv-title">Advertisement</h6></div>
@@ -48,6 +48,7 @@ import img7 from '@/assets/07.webp'
 import img8 from '@/assets/08.webp'
 export default {
   name: "AppList",
+  props: ['appGameList'],
   data() {
     return {
       img6,
@@ -57,14 +58,7 @@ export default {
     }
   },
   mounted() {
-    let arr = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] // 原数组
-    let newArr = [] // 新数组
-    let num = Math.ceil(arr.length / 11)
-    console.log(num);
-    for ( let i = 1; i <= num; i++ ) {
-      newArr[i - 1] = arr.splice(0,11)
-    }
-    console.log(newArr);
+
   },
   methods: {
     detailsClick() {

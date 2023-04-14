@@ -1,6 +1,6 @@
 <template>
   <div class="bottom-list">
-    <div class="item" v-for="(item,index) in arr" :key="index" @click="classClick"><img :src="img6" alt=""></div>
+    <div class="item" v-for="(item,index) in bottomGameList" :key="index" @click="classClick"><img :src="item.iconUrl" alt=""></div>
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import img6 from '@/assets/06.webp'
 export default {
   name: "BottomList",
+  props: ['bottomGameList'],
   data() {
     return {
       img6,

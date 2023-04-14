@@ -1,34 +1,25 @@
 <template>
   <div class="top-box">
-    <div class="item" @click="detailsClick"><img :src="img6" alt=""></div>
-    <div class="item"><img :src="img7" alt=""></div>
-    <div class="item"><img :src="img8" alt=""></div>
-    <div class="item"><img :src="img9" alt=""></div>
-    <div class="item"><img :src="img99" alt=""></div>
+    <div class="item" @click="detailsClick(item)" v-for="(item,index) in topGameList" :key="index"><img :src="item.iconUrl" alt=""></div>
   </div>
 </template>
 
 <script>
-import img6 from '@/assets/06.webp'
-import img7 from '@/assets/07.webp'
-import img8 from '@/assets/08.webp'
-import img9 from '@/assets/09.webp'
-import img99 from '@/assets/10.webp'
 export default {
   name: "TopBox",
+  props: ['topGameList'],
   data() {
     return {
-      img6,
-      img7,
-      img8,
-      img9,
-      img99,
+
     }
   },
   methods: {
-    detailsClick() {
+    detailsClick(item) {
       this.$router.push({
-        path: '/mobileDetails'
+        path: '/mobileDetails',
+        query: {
+          gameId: item.gameId
+        }
       })
     }
   }
