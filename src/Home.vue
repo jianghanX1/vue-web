@@ -45,21 +45,6 @@ export default {
     } else {
       this.screenType = 2
     }
-    // 随机打乱数组
-    let x = [1, 2, 3, 4, 5];
-    function shuffle(arr) {
-      let length = arr.length,
-        randomIndex,
-        temp;
-      while (length) {
-        randomIndex = Math.floor(Math.random() * (length--));
-        temp = arr[randomIndex];
-        arr[randomIndex] = arr[length];
-        arr[length] = temp
-      }
-      return arr;
-    }
-    console.log(shuffle(x))
   },
   mounted() {
     getGameList().then((res)=>{
@@ -67,7 +52,7 @@ export default {
       const { data } = res || {}
       const { code, data:dataObj } = data || {}
       if (code == 1) {
-        let arr = dataObj // 原数组
+        let arr = dataObj || [] // 原数组
         this.topGameList = arr.splice(0,5) // 头部五条数据
         this.bottomGameList = arr.splice(arr.length - 8,8) // 底部五条数据
         let newArr = [] // 新数组

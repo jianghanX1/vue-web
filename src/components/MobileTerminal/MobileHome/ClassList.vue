@@ -1,7 +1,7 @@
 <template>
   <div class="class-box" :style="styleType ? {marginTop: 0} : null">
     <div class="class-list" :style="styleType ? {padding: 0} : null">
-      <div class="class-item" v-for="(item,index) in arr" :key="index" @click="detailsClick"><img :src="img6" alt=""></div>
+      <div class="class-item" v-for="(item,index) in gameTypeList" :key="index" @click="detailsClick(item)"><img :src="item.iconUrl" alt=""></div>
     </div>
   </div>
 </template>
@@ -10,17 +10,19 @@
 import img6 from '@/assets/06.webp'
 export default {
   name: "ClassList",
-  props: ["styleType"],
+  props: ["styleType",'gameTypeList'],
   data() {
     return {
       img6,
-      arr: [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     }
   },
   methods: {
-    detailsClick() {
+    detailsClick(item) {
       this.$router.push({
-        path: '/mobileDetails'
+        path: '/mobileDetails',
+        query: {
+          gameId: item.gameId
+        }
       },()=>{})
     }
   }

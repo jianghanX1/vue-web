@@ -6,9 +6,9 @@
       </div>
       <div class="details-top-box">
         <div class="app-base">
-          <div class="app-pic"><img :src="img6" alt=""></div>
+          <div class="app-pic"><img :src="iconUrl" alt=""></div>
           <div class="app-info">
-            <p class="app-name">Stickman Hook Rescue</p>
+            <p class="app-name">{{ gameName }}</p>
             <div class="app-btns">
               <div class="app-collection">
 
@@ -21,6 +21,10 @@
         </button>
       </div>
       <div class="details-seo-box">
+        <div class="desc-item">
+          <div class="desc-title">{{ gameName }}</div>
+          <div class="desc-text">{{ iconUrl }}</div>
+        </div>
         <div class="seo-tags">
           <a class="seo-tag" style="color: #f5b417">Obstacle Games</a>
           <a class="seo-tag" style="color: #54abd7">Adventure Games</a>
@@ -30,24 +34,20 @@
       <div class="details-recommend-box">
         <p class="recommend-title">Recommendations for similar games</p>
         <div class="recommend-list">
-          <ClassList styleType="1"></ClassList>
+          <ClassList styleType="1" :gameTypeList="gameTypeList"></ClassList>
         </div>
       </div>
     </div>
     <div class="app-module" :style="playValue ? {display: 'block'} : {display: 'none'}" v-if="playValue">
       <div class="app-iframe">
         <div class="iframe-box">
-          <iframe id="gameIframe" src="https://download.vigoogames.com/sogame-download/ShortcutPro/index.html" width="100%" height="100%"></iframe>
+          <iframe id="gameIframe" :src="playUrl" width="100%" height="100%"></iframe>
         </div>
         <div class="iframe-back" @click="backClick"><i class="el-icon-arrow-left"></i></div>
       </div>
       <div class="app-promote">
         <div class="promote-list">
-          <div class="item" @click="detailsClick"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img6" alt=""></div>
-          <div class="item"><img :src="img6" alt=""></div>
+          <div class="item" @click="detailsClick(item)" v-for="(item,index) in gameShuffleList" :key="index"><img :src="item.iconUrl" alt=""></div>
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@
 <script>
 import img6 from '@/assets/06.webp';
 import ClassList from "@/components/MobileTerminal/MobileHome/ClassList";
+import { getGameInfo, getGameList, shuffle } from "@/utils/utils";
 export default {
   name: "Index",
   components: {
@@ -68,14 +69,54 @@ export default {
   data() {
     return {
       img6,
+      gameName: '', // 游戏名称
+      iconUrl: '', // 游戏icon
+      description: '', // 游戏简介
+      playUrl: '', // 游戏url
+      gameTypeList: [], // 游戏列表
+      gameShuffleList: [], // 随机列表
       playValue: false,
-      isTop: false
+      isTop: false,
+      timer: null, // 定时器
     }
   },
   mounted() {
     document.getElementById('mobile-details').addEventListener("scroll",this.handleScroll, true)
+    const { query } = this.$route
+    const { gameId } = query || {}
+    // 获取游戏详情
+    getGameInfo(gameId).then((res)=>{
+      console.log(res);
+      const { data } = res || {}
+      const { code, data:dataObj } = data || {}
+      const { gameName, iconUrl, description, playUrl, gameType } = dataObj || {}
+      if (code == 1) {
+        this.gameName = gameName
+        this.iconUrl = iconUrl
+        this.description = description
+        this.playUrl = playUrl
+        this.getGameTypeList(gameType)
+      }
+    }).catch((err)=>{
+      console.log(err);
+    })
+    this.getGameTypeList(1)
   },
   methods: {
+    // 获取游戏列表
+    getGameTypeList(gameType) {
+      // 获取游戏列表
+      getGameList(gameType).then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        if (code == 1) {
+          this.gameTypeList = dataObj || []
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
     handleScroll() {
       //变量scrollTop是滚动条滚动时，距离顶部的距离
       let scrollTop = document.getElementById('mobile-details').scrollTop
@@ -91,13 +132,31 @@ export default {
     },
     playClick() {
       this.playValue = true
+      let arr = []
+      this.gameTypeList.map((item)=>{
+        arr.push(item)
+      })
+      this.gameShuffleList = arr.splice(0,5)
+      clearInterval(this.timer)
+      this.timer = setInterval(()=>{
+        let newArr = []
+        this.gameTypeList.map((item)=>{
+          newArr.push(item)
+        })
+        let shuffleArr = shuffle(newArr) || []
+        this.gameShuffleList = shuffleArr.splice(0,5)
+      },10000)
     },
     backClick() {
       this.playValue = false
+      clearInterval(this.timer)
     },
-    detailsClick() {
+    detailsClick(item) {
       this.$router.push({
-        path: '/mobileDetails'
+        path: '/mobileDetails',
+        query: {
+          gameId: item.gameId
+        }
       },()=>{})
       this.playValue = false
     }
@@ -253,6 +312,20 @@ export default {
     max-height: 9.375rem;
     overflow: auto;
     padding: 0 0.625rem;
+    .desc-item{
+      padding-top: 0.625rem;
+      .desc-title{
+        color: #fff;
+        font-size: .9375rem;
+      }
+      .desc-text{
+        margin-top: 0.625rem;
+        font-size: .75rem;
+        color: #dde5ff;
+        word-wrap: break-word;
+        word-break: break-word;
+      }
+    }
     .seo-tags {
       padding-top: 0.625rem;
       .seo-tag{
