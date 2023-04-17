@@ -5,7 +5,7 @@ export function getGameList (gameType) {
     url: '/api/pmm/game/ranking/list',
     method: 'get',
     params: {
-      gameType: gameType || 1
+      gameType
     }
   })
 }

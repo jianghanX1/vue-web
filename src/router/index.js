@@ -6,6 +6,8 @@ import GameType from '@/components/GameType/Index';
 import Details from '@/components/Details/Index'; // 详情页
 import MobileClassify from '@/components/MobileTerminal/MobileHome/MobileClassify/Index';
 import MobileDetails from '@/components/MobileTerminal/MobileDetails/Index';
+import Privacy from '@/Privacy';
+import ContactUs from '@/ContactUs';
 
 Vue.use(Router)
 
@@ -39,6 +41,16 @@ export default new Router({
       path: '/mobileDetails',
       name: 'mobileDetails',
       component: MobileDetails
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: Privacy
+    },
+    {
+      path: '/contactUs',
+      name: 'contactUs',
+      component: ContactUs
     },
   ]
 })

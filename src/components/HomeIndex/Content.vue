@@ -19,18 +19,23 @@ export default {
     }
   },
   mounted() {
-    getGameList().then((res)=>{
-      console.log(res);
-      const { data } = res || {}
-      const { code, data:dataObj } = data || {}
-      if (code == 1) {
-        this.gameList = dataObj
-      }
-    }).catch((err)=>{
-      console.log(err);
-    })
+    this.getList()
   },
   methods: {
+    getList() {
+      const { query } = this.$route
+      const { gameType } = query || {}
+      getGameList(gameType).then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        if (code == 1) {
+          this.gameList = dataObj
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
     // 点击跳转详情
     iconClick(item) {
       this.$router.push({
@@ -39,6 +44,12 @@ export default {
           gameId: item.gameId
         }
       })
+    }
+  },
+  watch: {
+    '$route'(val) {
+      console.log(val,'数据更新了');
+      this.getList()
     }
   }
 }

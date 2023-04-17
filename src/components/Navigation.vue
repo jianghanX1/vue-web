@@ -2,9 +2,9 @@
     <div>
       <div class="bj">
         <div class="bj_left">
-          <div class="title" @click="vigooGamesClick"><i class="el-icon-menu" @click="positionMenuClick"></i> ViGOO GAMES</div>
+          <div class="title" @click="vigooGamesClick"><i class="el-icon-menu" @click.stop="positionMenuClick"></i> ViGOO GAMES</div>
           <div class="nav-list">
-            <div @click="newGamesClick" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
+            <div @click="newGamesClick(item.code)" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
           </div>
         </div>
         <div class="search">
@@ -14,8 +14,8 @@
             v-model="searchInput">
           </el-input>
         </div>
-        <div class="position" :style="positionMenu ? 'display: block' : 'display: none'">
-          <div @click="newGamesClick" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
+        <div class="position" :style="positionMenu ? 'display: block' : 'display: none'" @mouseleave="mouseleave">
+          <div @click="newGamesClick(item.code)" v-for="(item,index) in gameTypeList" :key="index">{{ item.name }}</div>
         </div>
       </div>
     </div>
@@ -39,6 +39,9 @@ export default {
     positionMenuClick() {
       this.positionMenu = !this.positionMenu
       console.log(this.positionMenu);
+    },
+    mouseleave() {
+      this.positionMenu = false
     },
     // 获取游戏类型
     getGameType() {
@@ -66,9 +69,12 @@ export default {
         path: '/'
       },()=>{})
     },
-    newGamesClick() {
+    newGamesClick(gameType) {
       this.$router.push({
-        path: '/gameType'
+        path: '/gameType',
+        query: {
+          gameType
+        }
       },()=>{})
     },
   },
@@ -77,7 +83,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-@media screen and (max-width: 1440px){
+@media screen and (max-width: 1650px){
   .bj_left{
     .title{
       .el-icon-menu{
@@ -95,11 +101,21 @@ export default {
     position: relative;
     .position{
       position: absolute;
-      top: 56px;
+      top: 51px;
       left: 0;
       background: #f83123;
       padding: 6px 0;
       min-width: 184px;
+      z-index: 99;
+      div{
+        height: 48px;
+        line-height: 48px;
+        padding: 0 12px;
+      }
+      div:hover{
+        cursor: pointer;
+        background-color: rgba(0,0,0,.1);
+      }
     }
     .bj_left{
       display: flex;
