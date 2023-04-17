@@ -60,7 +60,7 @@
 <script>
 import img6 from '@/assets/06.webp';
 import ClassList from "@/components/MobileTerminal/MobileHome/ClassList";
-import { getGameInfo, getGameList, shuffle } from "@/utils/utils";
+import { getGameInfo, getGameList, shuffle, determinePcOrMove } from "@/utils/utils";
 export default {
   name: "Index",
   components: {
@@ -78,6 +78,18 @@ export default {
       playValue: false,
       isTop: false,
       timer: null, // 定时器
+    }
+  },
+  created() {
+    const { query } = this.$route
+    const { gameId } = query
+    if (determinePcOrMove() == 2) {
+      this.$router.push({
+        path: '/P/details',
+        query: {
+          gameId
+        }
+      })
     }
   },
   mounted() {
@@ -153,7 +165,7 @@ export default {
     },
     detailsClick(item) {
       this.$router.push({
-        path: '/mobileDetails',
+        path: '/M/details',
         query: {
           gameId: item.gameId
         }

@@ -32,3 +32,13 @@ export function shuffle(arr) {
   }
   return arr;
 }
+// 判断pc/移动端
+export function determinePcOrMove() {
+  if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+    //fontsize计算
+    document.documentElement.style.fontSize = document.documentElement.clientWidth/320 * 16 +'px'
+    return 1
+  } else {
+    return 2
+  }
+}

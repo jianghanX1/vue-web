@@ -39,7 +39,7 @@ export default {
     // 点击跳转详情
     iconClick(item) {
       this.$router.push({
-        path: '/details',
+        path: '/P/details',
         query: {
           gameId: item.gameId
         }

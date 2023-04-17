@@ -18,7 +18,7 @@ export default {
   methods: {
     classClick() {
       this.$router.push({
-        path: '/mobileClassify'
+        path: '/M/gameType'
       })
     }
   }

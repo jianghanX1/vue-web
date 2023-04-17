@@ -71,7 +71,7 @@ export default {
     },
     newGamesClick(gameType) {
       this.$router.push({
-        path: '/gameType',
+        path: '/P/gameType',
         query: {
           gameType
         }

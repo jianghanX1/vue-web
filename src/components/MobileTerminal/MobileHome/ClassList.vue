@@ -19,7 +19,7 @@ export default {
   methods: {
     detailsClick(item) {
       this.$router.push({
-        path: '/mobileDetails',
+        path: '/M/details',
         query: {
           gameId: item.gameId
         }

@@ -63,7 +63,7 @@ export default {
   methods: {
     detailsClick() {
       this.$router.push({
-        path: '/mobileDetails'
+        path: '/M/details'
       })
     }
   }
