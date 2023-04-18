@@ -101,6 +101,7 @@ export default {
           height: 100%;
           border-radius: 20px;
           border: 2px solid #fff;
+          background: white;
         }
       }
     }

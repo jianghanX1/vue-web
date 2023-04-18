@@ -4,53 +4,42 @@
       <div class="main-game">
         <div class="game-part">
           <div class="game-container" :style="full">
-            <iframe src="https://download-cdn21.vigoo.com/dinosaursniping-download/index.html" width="100%" height="100%"></iframe>
+            <iframe :src="gameInfo.playUrl || null" width="100%" height="100%"></iframe>
             <div class="close" :style="closeStyle" @click="closeClick"><i class="el-icon-close" /></div>
             <div class="flex-games" v-show="isBlock" :style="leftHideStyle">
               <div class="btns">
-                <a href="javascript: void(0)" class="btn-left" @click="leftClick"></a>
-                <a href="javascript: void(0)" class="btn-top" v-show="topBtnType" @click="topClick"></a>
-                <a href="javascript: void(0)" class="btn-bottom" v-show="bottomBtnType" @click="bottomClick"></a>
+                <a href="javascript: void(0)" class="btn-left" @click="leftClick"><i class="el-icon-arrow-left" v-show="leftBtnType"></i><i class="el-icon-arrow-right" v-show="!leftBtnType"></i></a>
+                <a href="javascript: void(0)" class="btn-top" v-show="topBtnType" @click="topClick"><i class="el-icon-arrow-up"></i></a>
+                <a href="javascript: void(0)" class="btn-bottom" v-show="bottomBtnType" @click="bottomClick"><i class="el-icon-arrow-down"></i></a>
               </div>
               <div class="game-warp">
                 <div class="game-list" :style="{transform: `translateY(${heightType}px)`}" id="game-list">
-                  <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
+                  <div class="app-item" v-for="(item,index) in theSame" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="game-bar">
-            <div class="bar-app-icon"><img :src="img2" alt=""></div>
+            <div class="bar-app-icon"><img :src="gameInfo.iconUrl" alt=""></div>
             <div class="bar-btns">
-              <div class="download"><span>Add to Desktop</span></div>
-              <div class="play-tag"><span>Play MOTO Games</span></div>
+<!--              <div class="download"><span>Add to Desktop</span></div>-->
+              <div class="play-tag" @click="getGameType(gameInfo.gameType)"><span>Play {{ gameInfo.gameType }} Games</span></div>
               <div class="full-btn" @click="amplifyClick"><i class="el-icon-rank"></i></div>
             </div>
           </div>
         </div>
         <div class="game-rec">
-          <div class="app-item"><img :src="img2" alt=""></div>
-          <div class="app-item"><img :src="img3" alt=""></div>
-          <div class="app-item"><img :src="img4" alt=""></div>
-          <div class="app-item"><img :src="img5" alt=""></div>
-          <div class="app-item"><img :src="img6" alt=""></div>
+          <div class="app-item" v-for="(item,index) in four" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
         </div>
       </div>
       <div class="main-waterfall">
         <div class="recommend-banner">
-          <div class="app-item"><img :src="img2" alt=""></div>
-          <div class="app-item"><img :src="img3" alt=""></div>
-          <div class="app-item"><img :src="img4" alt=""></div>
-          <div class="app-item"><img :src="img5" alt=""></div>
-          <div class="app-item"><img :src="img6" alt=""></div>
-          <div class="app-item"><img :src="img6" alt=""></div>
-          <div class="app-item"><img :src="img6" alt=""></div>
-          <div class="app-item"><img :src="img6" alt=""></div>
+          <div class="app-item" v-for="(item,index) in five" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
         </div>
-        <div class="game-list">
-          <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
+        <div class="game-list" v-if="six.length">
+          <div class="app-item" v-for="(item,index) in six" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
           <div class="more-btn">
-            <div>Load More Games</div>
+            <div v-if="intercept.length" @click="loadMoreGames">Load More Games</div>
           </div>
         </div>
       </div>
@@ -69,59 +58,26 @@
       </div>
       <div class="float-games">
         <div class="games-container">
-          <div class="title">Top Games</div>
+          <div class="title">{{ gameTypeList[0] }}</div>
           <div class="game-warp">
             <div class="game-list">
-              <div class="app-item"><img :src="img2" alt=""></div>
-              <div class="app-item"><img :src="img3" alt=""></div>
-              <div class="app-item"><img :src="img4" alt=""></div>
-              <div class="app-item"><img :src="img5" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item" v-for="(item,index) in one" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
             </div>
           </div>
         </div>
         <div class="games-container">
-          <div class="title">New Games</div>
+          <div class="title">{{ gameTypeList[1] }}</div>
           <div class="game-warp">
             <div class="game-list">
-              <div class="app-item"><img :src="img2" alt=""></div>
-              <div class="app-item"><img :src="img3" alt=""></div>
-              <div class="app-item"><img :src="img4" alt=""></div>
-              <div class="app-item"><img :src="img5" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item" v-for="(item,index) in two" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
             </div>
           </div>
         </div>
         <div class="games-container" id="girlsGames">
-          <div class="title">Girls Games</div>
+          <div class="title">{{ gameTypeList[2] }}</div>
           <div class="game-warp">
             <div class="game-list">
-              <div class="app-item"><img :src="img2" alt=""></div>
-              <div class="app-item"><img :src="img3" alt=""></div>
-              <div class="app-item"><img :src="img4" alt=""></div>
-              <div class="app-item"><img :src="img5" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
-              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item" v-for="(item,index) in three" :key="index" @click="switchGame(item.gameId)"><img :src="item.iconUrl" alt=""></div>
             </div>
           </div>
         </div>
@@ -131,13 +87,8 @@
 </template>
 
 <script>
-import img2 from '@/assets/02.webp'
-import img3 from '@/assets/03.webp'
-import img4 from '@/assets/04.webp'
-import img5 from '@/assets/05.webp'
-import img6 from '@/assets/06.webp'
 import Bottom from '@/components/HomeIndex/Bottom';
-import { getGameList, determinePcOrMove } from '@/utils/utils.js'
+import { getGameList, determinePcOrMove, shuffle } from '@/utils/utils.js'
 import request from '@/utils/request.js'
 export default {
   name: "Index",
@@ -146,12 +97,17 @@ export default {
   },
   data() {
     return {
-      img2, img3, img4, img5, img6,
-      gameTypeList: [], // 左侧类型
+      gameInfo: {}, // 游戏详情数据
+      theSame: [], // 同详情游戏类型相同的游戏，大屏用到
+      gameTypeList: [], // 左侧类型名称
       one: [], // 左侧类型数据
       two: [], // 左侧类型数据
       three: [], // 左侧类型数据
-      gameList: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      four: [], // 右侧截取五个数据
+      five: [], // 右侧截取八个数据
+      six: [], // 右侧底部数据
+      intercept: [], // 右侧截取后数据用来点击更多时截取30个与six合并
+      gameList: [],
       full: null,
       fullStyle: {
         position: "fixed",
@@ -167,6 +123,7 @@ export default {
       leftHideStyle: null, // 大屏广告隐藏样式
       heightType: 0, // 偏移量
       gameListValue: 0, // 滚动区域高度
+      leftBtnType: true, // 侧按钮
       topBtnType: false, // 顶部按钮
       bottomBtnType: true, // 底部按钮
     }
@@ -199,10 +156,11 @@ export default {
         headdiv.style.position="relative";
       }
     }
+    this.getGameType()
   },
   methods: {
     // 获取游戏类型
-    getGameType() {
+    getGameType(gameType) {
       request({
         url: '/api/pmm/system/dict',
         method: 'get',
@@ -214,8 +172,23 @@ export default {
         const { code, data:dataObj } = data || {}
         const { game_type, game_grade } = dataObj || {}
         if (code == 1) {
-          let arr = game_type && game_type.splice(0,3)
-          this.gameTypeList = arr
+          let arr = game_type && game_type.splice(0,3) || []
+          if (gameType) {
+            arr.map((item)=>{
+              if (item.name == gameType) {
+                this.$router.push({
+                  path: '/P/gameType',
+                  query: {
+                    gameType: item.code
+                  }
+                })
+              }
+            })
+            return
+          }
+          arr.map((item)=>{
+            this.gameTypeList.push(item.name)
+          })
           this.getList(arr)
         } else {
           this.$message.error('获取游戏类别')
@@ -225,34 +198,75 @@ export default {
       })
     },
     getList(arr) {
+      const { query } = this.$route
+      const { gameId } = query || {}
       getGameList().then((res)=>{
-        console.log(res);
         const { data } = res || {}
         const { code, data:dataObj } = data || {}
         if (code == 1) {
+          // 随机打乱数组
+          let shuffleArr = shuffle(dataObj)
           let one = []
           let two = []
           let three = []
-          dataObj && dataObj.map((item)=>{
-            if (item.gameType == arr[1].name) {
+          shuffleArr && shuffleArr.map((item)=>{
+            if (item.gameType == arr[0].name) {
               one.push(item)
             }
-            if (item.gameType == arr[2].name) {
+            if (item.gameType == arr[1].name) {
               two.push(item)
             }
-            if (item.gameType == arr[3].name) {
+            if (item.gameType == arr[2].name) {
               three.push(item)
             }
           })
+          // 截取五个放右边
+          let newArr = []
+          let gameInfo = {}
+          let theSame = [] // 同类型游戏
+          shuffleArr && shuffleArr.map((item)=>{
+            if (item.gameId == gameId) {
+              gameInfo = item
+            }
+            newArr.push(item)
+          })
+          shuffleArr && shuffleArr.map((item)=>{
+            if (item.gameType == gameInfo.gameType) {
+              theSame.push(item)
+            }
+          })
+          this.theSame = theSame
+          this.gameInfo = gameInfo
           this.one = one
           this.two = two
           this.three = three
-          this.gameList = dataObj
+          this.four = newArr.splice(0,5)
+          this.five = newArr.splice(0,8)
+          this.six = newArr.splice(0,30)
+          this.intercept = newArr
+          this.gameList = shuffleArr
         } else {
           this.$message.error('数据加载失败')
         }
       }).catch((err)=>{
         console.log(err);
+      })
+    },
+    // 点击加载更多
+    loadMoreGames () {
+      let six = this.six
+      let intercept = this.intercept
+      let interceptArr = intercept.splice(0,30)
+      this.six = [...six,...interceptArr]
+      this.intercept = intercept
+    },
+    // 切换游戏
+    switchGame (gameId) {
+      this.$router.push({
+        path: '/P/details',
+        query: {
+          gameId
+        }
       })
     },
      // 点击放大游戏
@@ -266,9 +280,16 @@ export default {
         zIndex: 50,
         fontSize: "32px",
         color: '#ffffff',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        background: '#FF9900',
+        borderRadius: '50%',
+        width: '50px',
+        height: '50px',
+        textAlign: 'center',
+        lineHeight: '50px'
       }
       this.isBlock = true
+      this.bottomBtnType = this.theSame.length > 8
       setTimeout(() => {
         this.gameListValue = document.getElementById('game-list').offsetHeight
         console.log(this.gameListValue);
@@ -282,6 +303,7 @@ export default {
     },
     // 大屏广告点击左侧隐藏
     leftClick() {
+      this.leftBtnType = !this.leftBtnType
       this.leftHideType = !this.leftHideType
       this.leftHideStyle = this.leftHideType ? {
         left: '-110px'
@@ -304,7 +326,12 @@ export default {
       }
     }
   },
-
+  watch: {
+    '$route'(val) {
+      console.log(val,'数据更新了');
+      this.getGameType()
+    }
+  }
 }
 </script>
 
@@ -487,6 +514,12 @@ export default {
               transform: translateY(-50%);
               left: 100%;
               position: absolute;
+              text-align: center;
+              line-height: 50px;
+              .el-icon-arrow-left,.el-icon-arrow-right{
+                color: white;
+                font-size: 20px;
+              }
             }
             .btn-top{
               position: absolute;
@@ -494,6 +527,12 @@ export default {
               height: 30px;
               background-color: #fc5632;
               z-index: 2;
+              text-align: center;
+              line-height: 30px;
+              .el-icon-arrow-up{
+                color: white;
+                font-size: 20px;
+              }
             }
             .btn-bottom{
               position: absolute;
@@ -502,6 +541,12 @@ export default {
               height: 30px;
               background-color: #fc5632;
               z-index: 2;
+              text-align: center;
+              line-height: 30px;
+              .el-icon-arrow-down{
+                color: white;
+                font-size: 20px;
+              }
             }
           }
           .game-warp{
@@ -526,6 +571,7 @@ export default {
                   border-radius: 12px;
                   border: 2px solid #fff;
                   overflow: hidden;
+                  background: white;
                 }
               }
             }
@@ -547,6 +593,7 @@ export default {
           img{
             width: 100%;
             height: 100%;
+            background: white;
           }
         }
         .bar-btns{
@@ -577,6 +624,7 @@ export default {
             margin-left: 12px;
             font-size: 13px;
             color: #fff;
+            cursor: pointer;
           }
           .full-btn{
             width: 30px;
@@ -588,6 +636,7 @@ export default {
             margin-left: 8px;
             position: relative;
             transform: rotate(45deg);
+            cursor: pointer;
             /deep/ .el-icon-rank{
               font-size: 36px;
               color: #ffffff;
@@ -611,6 +660,7 @@ export default {
           height: 100%;
           border-radius: 12px;
           border: 2px solid #fff;
+          background: white;
         }
       }
     }
@@ -711,6 +761,9 @@ export default {
             .app-item {
               margin-bottom: 6px;
               float: left;
+              img{
+                background: white;
+              }
             }
           }
         }
@@ -732,6 +785,7 @@ export default {
       height: 100%;
       border: 2px solid #fff;
       border-radius: 12px;
+      background: white;
     }
   }
   @keyframes example {
