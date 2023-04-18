@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/Home';
+import App from '@/App';
 import HomeIndex from '@/components/HomeIndex/Index'; // 首页
 import GameType from '@/components/GameType/Index';
 import Details from '@/components/Details/Index'; // 详情页
@@ -17,8 +17,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home,
+      name: 'App',
+      component: App,
       redirect: '/P/homeIndex'
     },
     {

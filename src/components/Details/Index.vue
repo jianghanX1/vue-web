@@ -1,157 +1,156 @@
 <template>
-  <div>
-    <Navigation></Navigation>
-    <div class="details">
-      <div class="main-center">
-        <div class="main-game">
-          <div class="game-part">
-            <div class="game-container" :style="full">
-              <iframe src="https://download-cdn21.vigoo.com/dinosaursniping-download/index.html" width="100%" height="100%"></iframe>
-              <div class="close" :style="closeStyle" @click="closeClick"><i class="el-icon-close" /></div>
-              <div class="flex-games" v-show="isBlock" :style="leftHideStyle">
-                <div class="btns">
-                  <a href="javascript: void(0)" class="btn-left" @click="leftClick"></a>
-                  <a href="javascript: void(0)" class="btn-top" v-show="topBtnType" @click="topClick"></a>
-                  <a href="javascript: void(0)" class="btn-bottom" v-show="bottomBtnType" @click="bottomClick"></a>
-                </div>
-                <div class="game-warp">
-                  <div class="game-list" :style="{transform: `translateY(${heightType}px)`}" id="game-list">
-                    <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
-                  </div>
+  <div class="details">
+    <div class="main-center">
+      <div class="main-game">
+        <div class="game-part">
+          <div class="game-container" :style="full">
+            <iframe src="https://download-cdn21.vigoo.com/dinosaursniping-download/index.html" width="100%" height="100%"></iframe>
+            <div class="close" :style="closeStyle" @click="closeClick"><i class="el-icon-close" /></div>
+            <div class="flex-games" v-show="isBlock" :style="leftHideStyle">
+              <div class="btns">
+                <a href="javascript: void(0)" class="btn-left" @click="leftClick"></a>
+                <a href="javascript: void(0)" class="btn-top" v-show="topBtnType" @click="topClick"></a>
+                <a href="javascript: void(0)" class="btn-bottom" v-show="bottomBtnType" @click="bottomClick"></a>
+              </div>
+              <div class="game-warp">
+                <div class="game-list" :style="{transform: `translateY(${heightType}px)`}" id="game-list">
+                  <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
                 </div>
               </div>
             </div>
-            <div class="game-bar">
-              <div class="bar-app-icon"><img :src="img2" alt=""></div>
-              <div class="bar-btns">
-                <div class="download"><span>Add to Desktop</span></div>
-                <div class="play-tag"><span>Play MOTO Games</span></div>
-                <div class="full-btn" @click="amplifyClick"><i class="el-icon-rank"></i></div>
-              </div>
-            </div>
           </div>
-          <div class="game-rec">
-            <div class="app-item"><img :src="img2" alt=""></div>
-            <div class="app-item"><img :src="img3" alt=""></div>
-            <div class="app-item"><img :src="img4" alt=""></div>
-            <div class="app-item"><img :src="img5" alt=""></div>
-            <div class="app-item"><img :src="img6" alt=""></div>
-          </div>
-        </div>
-        <div class="main-waterfall">
-          <div class="recommend-banner">
-            <div class="app-item"><img :src="img2" alt=""></div>
-            <div class="app-item"><img :src="img3" alt=""></div>
-            <div class="app-item"><img :src="img4" alt=""></div>
-            <div class="app-item"><img :src="img5" alt=""></div>
-            <div class="app-item"><img :src="img6" alt=""></div>
-            <div class="app-item"><img :src="img6" alt=""></div>
-            <div class="app-item"><img :src="img6" alt=""></div>
-            <div class="app-item"><img :src="img6" alt=""></div>
-          </div>
-          <div class="game-list">
-            <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
-            <div class="more-btn">
-              <div>Load More Games</div>
+          <div class="game-bar">
+            <div class="bar-app-icon"><img :src="img2" alt=""></div>
+            <div class="bar-btns">
+              <div class="download"><span>Add to Desktop</span></div>
+              <div class="play-tag"><span>Play MOTO Games</span></div>
+              <div class="full-btn" @click="amplifyClick"><i class="el-icon-rank"></i></div>
             </div>
           </div>
         </div>
-        <Bottom titleType="1" />
+        <div class="game-rec">
+          <div class="app-item"><img :src="img2" alt=""></div>
+          <div class="app-item"><img :src="img3" alt=""></div>
+          <div class="app-item"><img :src="img4" alt=""></div>
+          <div class="app-item"><img :src="img5" alt=""></div>
+          <div class="app-item"><img :src="img6" alt=""></div>
+        </div>
       </div>
-      <div class="main-float">
-        <div class="float-ads">
-          <div class="ads-top">
-            <div class="ads-title"></div>
-            <div class="ads-container"></div>
-          </div>
-          <div class="ads-bottom">
-            <div class="ads-title"></div>
-            <div class="ads-container"></div>
+      <div class="main-waterfall">
+        <div class="recommend-banner">
+          <div class="app-item"><img :src="img2" alt=""></div>
+          <div class="app-item"><img :src="img3" alt=""></div>
+          <div class="app-item"><img :src="img4" alt=""></div>
+          <div class="app-item"><img :src="img5" alt=""></div>
+          <div class="app-item"><img :src="img6" alt=""></div>
+          <div class="app-item"><img :src="img6" alt=""></div>
+          <div class="app-item"><img :src="img6" alt=""></div>
+          <div class="app-item"><img :src="img6" alt=""></div>
+        </div>
+        <div class="game-list">
+          <div class="app-item" v-for="(item,index) in gameList" :key="index"><img :src="img2" alt=""></div>
+          <div class="more-btn">
+            <div>Load More Games</div>
           </div>
         </div>
-        <div class="float-games">
-          <div class="games-container">
-            <div class="title">Top Games</div>
-            <div class="game-warp">
-              <div class="game-list">
-                <div class="app-item"><img :src="img2" alt=""></div>
-                <div class="app-item"><img :src="img3" alt=""></div>
-                <div class="app-item"><img :src="img4" alt=""></div>
-                <div class="app-item"><img :src="img5" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-              </div>
+      </div>
+      <Bottom titleType="1" />
+    </div>
+    <div class="main-float">
+      <div class="float-ads">
+        <div class="ads-top">
+          <div class="ads-title"></div>
+          <div class="ads-container"></div>
+        </div>
+        <div class="ads-bottom">
+          <div class="ads-title"></div>
+          <div class="ads-container"></div>
+        </div>
+      </div>
+      <div class="float-games">
+        <div class="games-container">
+          <div class="title">Top Games</div>
+          <div class="game-warp">
+            <div class="game-list">
+              <div class="app-item"><img :src="img2" alt=""></div>
+              <div class="app-item"><img :src="img3" alt=""></div>
+              <div class="app-item"><img :src="img4" alt=""></div>
+              <div class="app-item"><img :src="img5" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
             </div>
           </div>
-          <div class="games-container">
-            <div class="title">New Games</div>
-            <div class="game-warp">
-              <div class="game-list">
-                <div class="app-item"><img :src="img2" alt=""></div>
-                <div class="app-item"><img :src="img3" alt=""></div>
-                <div class="app-item"><img :src="img4" alt=""></div>
-                <div class="app-item"><img :src="img5" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-              </div>
+        </div>
+        <div class="games-container">
+          <div class="title">New Games</div>
+          <div class="game-warp">
+            <div class="game-list">
+              <div class="app-item"><img :src="img2" alt=""></div>
+              <div class="app-item"><img :src="img3" alt=""></div>
+              <div class="app-item"><img :src="img4" alt=""></div>
+              <div class="app-item"><img :src="img5" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
             </div>
           </div>
-          <div class="games-container" id="girlsGames">
-            <div class="title">Girls Games</div>
-            <div class="game-warp">
-              <div class="game-list">
-                <div class="app-item"><img :src="img2" alt=""></div>
-                <div class="app-item"><img :src="img3" alt=""></div>
-                <div class="app-item"><img :src="img4" alt=""></div>
-                <div class="app-item"><img :src="img5" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-                <div class="app-item"><img :src="img6" alt=""></div>
-              </div>
+        </div>
+        <div class="games-container" id="girlsGames">
+          <div class="title">Girls Games</div>
+          <div class="game-warp">
+            <div class="game-list">
+              <div class="app-item"><img :src="img2" alt=""></div>
+              <div class="app-item"><img :src="img3" alt=""></div>
+              <div class="app-item"><img :src="img4" alt=""></div>
+              <div class="app-item"><img :src="img5" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
+              <div class="app-item"><img :src="img6" alt=""></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <BottomNav></BottomNav>
   </div>
 </template>
 
 <script>
-import Navigation from '@/components/Navigation';
-import BottomNav from '@/components/BottomNav';
 import img2 from '@/assets/02.webp'
 import img3 from '@/assets/03.webp'
 import img4 from '@/assets/04.webp'
 import img5 from '@/assets/05.webp'
 import img6 from '@/assets/06.webp'
 import Bottom from '@/components/HomeIndex/Bottom';
-import { determinePcOrMove } from '@/utils/utils.js'
+import { getGameList, determinePcOrMove } from '@/utils/utils.js'
+import request from '@/utils/request.js'
 export default {
   name: "Index",
   components: {
-    Bottom,Navigation,BottomNav
+    Bottom
   },
   data() {
     return {
       img2, img3, img4, img5, img6,
+      gameTypeList: [], // 左侧类型
+      one: [], // 左侧类型数据
+      two: [], // 左侧类型数据
+      three: [], // 左侧类型数据
       gameList: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
       full: null,
       fullStyle: {
@@ -184,7 +183,78 @@ export default {
       })
     }
   },
+  mounted() {
+    let headdiv=document.getElementById("girlsGames");
+    let nTop = headdiv.offsetTop;
+    window.onscroll = function () {
+      //变量scrollTop是滚动条滚动时，距离顶部的距离
+      let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+      console.log(scrollTop);
+
+      console.log(nTop);
+      if (scrollTop > nTop) {
+        headdiv.style.position = "fixed"
+        headdiv.style.top = "10px"
+      } else {
+        headdiv.style.position="relative";
+      }
+    }
+  },
   methods: {
+    // 获取游戏类型
+    getGameType() {
+      request({
+        url: '/api/pmm/system/dict',
+        method: 'get',
+        params: {
+          dictTypes: 'game_type'
+        }
+      }).then((res)=>{
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        const { game_type, game_grade } = dataObj || {}
+        if (code == 1) {
+          let arr = game_type && game_type.splice(0,3)
+          this.gameTypeList = arr
+          this.getList(arr)
+        } else {
+          this.$message.error('获取游戏类别')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
+    getList(arr) {
+      getGameList().then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        if (code == 1) {
+          let one = []
+          let two = []
+          let three = []
+          dataObj && dataObj.map((item)=>{
+            if (item.gameType == arr[1].name) {
+              one.push(item)
+            }
+            if (item.gameType == arr[2].name) {
+              two.push(item)
+            }
+            if (item.gameType == arr[3].name) {
+              three.push(item)
+            }
+          })
+          this.one = one
+          this.two = two
+          this.three = three
+          this.gameList = dataObj
+        } else {
+          this.$message.error('数据加载失败')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
      // 点击放大游戏
     amplifyClick() {
       this.full = this.fullStyle
@@ -234,23 +304,7 @@ export default {
       }
     }
   },
-  mounted() {
-    let headdiv=document.getElementById("girlsGames");
-    let nTop = headdiv.offsetTop;
-    window.onscroll = function () {
-      //变量scrollTop是滚动条滚动时，距离顶部的距离
-      let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
-      console.log(scrollTop);
 
-      console.log(nTop);
-      if (scrollTop > nTop) {
-        headdiv.style.position = "fixed"
-        headdiv.style.top = "10px"
-      } else {
-        headdiv.style.position="relative";
-      }
-    }
-  }
 }
 </script>
 

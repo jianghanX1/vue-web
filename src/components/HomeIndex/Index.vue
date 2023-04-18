@@ -1,51 +1,33 @@
 <template>
-  <div>
-    <Navigation></Navigation>
-    <div class="big">
-      <div>
-        <Content></Content>
-        <Bottom
-          titleType="1"
-        />
-      </div>
-      <div class="recent-game">
-        <div class="title">Recent game</div>
-        <div class="content">
-          <div class="item"><img :src="img7" alt=""></div>
-          <div class="item"><img :src="img8" alt=""></div>
-          <div class="item"><img :src="img9" alt=""></div>
-          <div class="item"><img :src="img99" alt=""></div>
-        </div>
+  <div class="big">
+    <div>
+      <Content></Content>
+      <Bottom
+        titleType="1"
+      />
+    </div>
+    <div class="recent-game">
+      <div class="title">Recent game</div>
+      <div class="content">
+        <div class="item" v-for="(item,index) in recentGameList" :key="index"><img :src="item.iconUrl" alt=""></div>
       </div>
     </div>
-    <BottomNav></BottomNav>
   </div>
 </template>
 
 <script>
-import Navigation from '@/components/Navigation';
-import BottomNav from '@/components/BottomNav';
 import Content from '@/components/HomeIndex/Content';
 import Bottom from '@/components/HomeIndex/Bottom';
-import img7 from '@/assets/07.webp';
-import img8 from '@/assets/08.webp';
-import img9 from '@/assets/09.webp';
-import img99 from '@/assets/10.webp';
-import { determinePcOrMove } from '@/utils/utils.js'
+import { getGameList, determinePcOrMove } from '@/utils/utils.js'
 export default {
   name: "HomeIndex",
   components: {
-    Navigation,
-    BottomNav,
     Content,
     Bottom
   },
   data() {
     return {
-      img7,
-      img8,
-      img9,
-      img99,
+      recentGameList: []
     }
   },
   created() {
@@ -54,6 +36,26 @@ export default {
         path: '/M/homeIndex'
       })
     }
+  },
+  mounted() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      getGameList(1).then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        if (code == 1) {
+          let arr = dataObj.splice(0,4)
+          this.recentGameList = arr
+        } else {
+          this.$message.error('数据加载失败')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      })
+    },
   }
 }
 </script>
@@ -62,6 +64,8 @@ export default {
 .big{
   display: flex;
   min-width: 730px;
+  height: calc(100vh - 85px);
+  overflow-y: auto;
 }
 @media screen and (max-width: 840px){
   .recent-game {

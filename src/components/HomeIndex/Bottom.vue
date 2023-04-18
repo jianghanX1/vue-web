@@ -1,5 +1,5 @@
 <template>
-  <div class="big-box">
+  <div class="bottom-box">
     <div class="bj" v-if="titleType == 1">
       <div class="title">VIGOO GAMES</div>
       <div class="small-title">Play online games on Vigoo</div>
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .big-box{
+  .bottom-box{
     padding: 20px 30px;
     .bj{
       padding: 40px 0 30px;

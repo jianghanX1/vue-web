@@ -31,6 +31,8 @@ export default {
         const { code, data:dataObj } = data || {}
         if (code == 1) {
           this.gameList = dataObj
+        } else {
+          this.$message.error('数据加载失败')
         }
       }).catch((err)=>{
         console.log(err);

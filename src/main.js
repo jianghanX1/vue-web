@@ -4,9 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import { Button, Select, Input } from 'element-ui'
+import { Button, Select, Input, Message } from 'element-ui'
 
 Vue.prototype.$axios = axios
+Vue.prototype.$message = Message
 Vue.config.productionTip = false
 
 Vue.use(Button)

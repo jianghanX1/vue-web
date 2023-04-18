@@ -58,7 +58,7 @@ export default {
         if (code == 1) {
           this.gameTypeList = game_type
         } else {
-          this.$message.error('获取游戏类别/分级失败')
+          this.$message.error('获取游戏类别')
         }
       }).catch((err)=>{
         console.log(err);
