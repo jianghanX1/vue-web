@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import request from '@/utils/request.js'
+import { getGameType } from "@/utils/utils";
 export default {
   name: 'Banner',
   data () {
@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted() {
-    this.getGameType()
+    this.getGameType1()
   },
   methods: {
     positionMenuClick() {
@@ -44,21 +44,15 @@ export default {
       this.positionMenu = false
     },
     // 获取游戏类型
-    getGameType() {
-      request({
-        url: '/api/pmm/system/dict',
-        method: 'get',
-        params: {
-          dictTypes: 'game_type'
-        }
-      }).then((res)=>{
+    getGameType1() {
+      getGameType().then((res)=>{
         const { data } = res || {}
         const { code, data:dataObj } = data || {}
         const { game_type, game_grade } = dataObj || {}
         if (code == 1) {
           this.gameTypeList = game_type
         } else {
-          this.$message.error('获取游戏类别')
+          this.$message.error('获取游戏类别失败')
         }
       }).catch((err)=>{
         console.log(err);
@@ -120,7 +114,7 @@ export default {
     .bj_left{
       display: flex;
       .title{
-        min-width: 200px;
+        min-width: 235px;
         line-height: 56px;
         font-size: 22px;
         font-weight: bold;

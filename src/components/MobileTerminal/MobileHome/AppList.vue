@@ -3,38 +3,38 @@
     <div class="app-list" v-for="(item,index) in appGameList" :key="index">
       <div class="app-list-content">
         <div class="content-top">
-          <div class="item" @click="detailsClick"><img :src="item[index][0].iconUrl" alt=""></div>
-          <div class="item"><img :src="item[index][1].iconUrl" alt=""></div>
-          <div class="item"><img :src="item[index][2].iconUrl" alt=""></div>
+          <div class="item" @click="detailsClick" v-show="item[0] && item[0].iconUrl"><img :src="item[0] && item[0].iconUrl" alt=""></div>
+          <div class="item" v-show="item[1] && item[1].iconUrl"><img :src="item[1] && item[1].iconUrl" alt=""></div>
+          <div class="item" v-show="item[2] && item[2].iconUrl"><img :src="item[2] && item[2].iconUrl" alt=""></div>
         </div>
         <div class="content-middle" v-if="(index + 1) % 2 !== 0">
           <div class="middle-left">
-            <div class="item"><img :src="item[index][3].iconUrl" alt=""></div>
+            <div class="item" v-show="item[3] && item[3].iconUrl"><img :src="item[3] && item[3].iconUrl" alt=""></div>
           </div>
           <div class="middle-right">
-            <div class="item-box"><div class="item"><img :src="item[index][4].iconUrl" alt=""></div></div>
-            <div class="item-box"><div class="item"><img :src="item[index][5].iconUrl" alt=""></div></div>
+            <div class="item-box" v-show="item[4] && item[4].iconUrl"><div class="item"><img :src="item[4] && item[4].iconUrl" alt=""></div></div>
+            <div class="item-box" v-show="item[5] && item[5].iconUrl"><div class="item"><img :src="item[5] && item[5].iconUrl" alt=""></div></div>
           </div>
           <div></div>
         </div>
         <div class="content-middle" v-if="(index + 1) % 2 === 0">
           <div class="middle-right">
-            <div class="item-box"><div class="item"><img :src="item[index][3].iconUrl" alt=""></div></div>
-            <div class="item-box"><div class="item"><img :src="item[index][4].iconUrl" alt=""></div></div>
+            <div class="item-box" v-show="item[3] && item[3].iconUrl"><div class="item"><img :src="item[3] && item[3].iconUrl" alt=""></div></div>
+            <div class="item-box" v-show="item[4] && item[4].iconUrl"><div class="item"><img :src="item[4] && item[4].iconUrl" alt=""></div></div>
           </div>
           <div class="middle-left2">
-            <div class="item"><img :src="item[index][5].iconUrl" alt=""></div>
+            <div class="item" v-show="item[5] && item[5].iconUrl"><img :src="item[5] && item[5].iconUrl" alt=""></div>
           </div>
           <div></div>
         </div>
         <div class="content-top">
-          <div class="item"><img :src="item[index][6].iconUrl" alt=""></div>
-          <div class="item"><img :src="item[index][7].iconUrl" alt=""></div>
-          <div class="item"><img :src="item[index][8].iconUrl" alt=""></div>
+          <div class="item" v-show="item[6] && item[6].iconUrl"><img :src="item[6] && item[6].iconUrl" alt=""></div>
+          <div class="item" v-show="item[7] && item[7].iconUrl"><img :src="item[7] && item[7].iconUrl" alt=""></div>
+          <div class="item" v-show="item[8] && item[8].iconUrl"><img :src="item[8] && item[8].iconUrl" alt=""></div>
         </div>
         <div class="content-bottom">
-          <div class="item-box"><div class="item"><img :src="item[index][9].iconUrl" alt=""></div></div>
-          <div class="item-box"><div class="item"><img :src="item[index][10].iconUrl" alt=""></div></div>
+          <div class="item-box" v-show="item[9] && item[9].iconUrl"><div class="item"><img :src="item[9] && item[9].iconUrl" alt=""></div></div>
+          <div class="item-box" v-show="item[10] && item[10].iconUrl"><div class="item"><img :src="item[10] && item[10].iconUrl" alt=""></div></div>
         </div>
       </div>
       <div class="adv" v-if="index === 0"><h6 class="adv-title">Advertisement</h6></div>
@@ -43,18 +43,12 @@
 </template>
 
 <script>
-import img6 from '@/assets/06.webp'
-import img7 from '@/assets/07.webp'
-import img8 from '@/assets/08.webp'
 export default {
   name: "AppList",
   props: ['appGameList'],
   data() {
     return {
-      img6,
-      img7,
-      img8,
-      arr: [1,1,1]
+
     }
   },
   mounted() {
@@ -92,6 +86,7 @@ export default {
         img{
           width: 100%;
           height: 100%;
+          background: white;
         }
       }
       .item:not(:last-child){
@@ -115,6 +110,7 @@ export default {
           img{
             width: 100%;
             height: 100%;
+            background: white;
           }
         }
       }
@@ -132,6 +128,7 @@ export default {
           img{
             width: 100%;
             height: 100%;
+            background: white;
           }
         }
       }
@@ -154,6 +151,7 @@ export default {
             img{
               width: 100%;
               height: 100%;
+              background: white;
             }
           }
         }
@@ -189,6 +187,7 @@ export default {
           img{
             width: 100%;
             height: 100%;
+            background: white;
           }
         }
       }

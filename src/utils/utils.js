@@ -19,6 +19,16 @@ export function getGameInfo (gameId) {
     }
   })
 }
+// 获取游戏类型
+export function getGameType (gameType) {
+  return  request({
+    url: '/api/pmm/system/dict',
+    method: 'get',
+    params: {
+      dictTypes: 'game_type'
+    }
+  })
+}
 // 随机打乱数组
 export function shuffle(arr) {
   let length = arr.length,

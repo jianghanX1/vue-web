@@ -7,13 +7,12 @@
 </template>
 
 <script>
-import img6 from '@/assets/06.webp'
 export default {
   name: "ClassList",
   props: ["styleType",'gameTypeList'],
   data() {
     return {
-      img6,
+
     }
   },
   methods: {

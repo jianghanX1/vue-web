@@ -23,7 +23,7 @@
             <div class="bar-app-icon"><img :src="gameInfo.iconUrl" alt=""></div>
             <div class="bar-btns">
 <!--              <div class="download"><span>Add to Desktop</span></div>-->
-              <div class="play-tag" @click="getGameType(gameInfo.gameType)"><span>Play {{ gameInfo.gameType }} Games</span></div>
+              <div class="play-tag" @click="getGameType1(gameInfo.gameType)"><span>Play {{ gameInfo.gameType }} Games</span></div>
               <div class="full-btn" @click="amplifyClick"><i class="el-icon-rank"></i></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
 
 <script>
 import Bottom from '@/components/HomeIndex/Bottom';
-import { getGameList, determinePcOrMove, shuffle } from '@/utils/utils.js'
+import { getGameList, determinePcOrMove, shuffle, getGameType } from '@/utils/utils.js'
 import request from '@/utils/request.js'
 export default {
   name: "Index",
@@ -156,18 +156,12 @@ export default {
         headdiv.style.position="relative";
       }
     }
-    this.getGameType()
+    this.getGameType1()
   },
   methods: {
     // 获取游戏类型
-    getGameType(gameType) {
-      request({
-        url: '/api/pmm/system/dict',
-        method: 'get',
-        params: {
-          dictTypes: 'game_type'
-        }
-      }).then((res)=>{
+    getGameType1(gameType) {
+      getGameType().then((res)=>{
         const { data } = res || {}
         const { code, data:dataObj } = data || {}
         const { game_type, game_grade } = dataObj || {}
@@ -191,7 +185,7 @@ export default {
           })
           this.getList(arr)
         } else {
-          this.$message.error('获取游戏类别')
+          this.$message.error('获取游戏类别失败')
         }
       }).catch((err)=>{
         console.log(err);
@@ -329,7 +323,7 @@ export default {
   watch: {
     '$route'(val) {
       console.log(val,'数据更新了');
-      this.getGameType()
+      this.getGameType1()
     }
   }
 }

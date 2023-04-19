@@ -1,24 +1,25 @@
 <template>
   <div class="bottom-list">
-    <div class="item" v-for="(item,index) in bottomGameList" :key="index" @click="classClick"><img :src="item.iconUrl" alt=""></div>
+    <div class="item" v-for="(item,index) in typeList" :key="index" @click="classClick(item.code)"><img :src="item.iconUrl" alt=""></div>
   </div>
 </template>
 
 <script>
-import img6 from '@/assets/06.webp'
 export default {
   name: "BottomList",
-  props: ['bottomGameList'],
+  props: ['typeList'],
   data() {
     return {
-      img6,
-      arr: [1,1,1,1,1,1]
+
     }
   },
   methods: {
-    classClick() {
+    classClick(gameType) {
       this.$router.push({
-        path: '/M/gameType'
+        path: '/M/gameType',
+        query: {
+          gameType
+        }
       })
     }
   }

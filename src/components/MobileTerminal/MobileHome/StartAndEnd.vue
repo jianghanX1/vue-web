@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="nav-bar">
-      <div>VIGOO GAMES</div>
+      <div @click="game">GAMES</div>
     </div>
     <slot></slot>
     <div class="end">
@@ -15,7 +15,14 @@
 
 <script>
 export default {
-  name: "StartAndEnd"
+  name: "StartAndEnd",
+  methods: {
+    game() {
+      this.$router.push({
+        path: '/M/homeIndex'
+      })
+    }
+  }
 }
 </script>
 

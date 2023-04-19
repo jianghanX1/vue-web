@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="mobile-details" :style="playValue ? {display: 'none'} : {display: 'block'}" id="mobile-details">
-      <div class="nav-bar">
-        <div>VIGOO GAMES</div>
-      </div>
-      <div class="details-top-box">
+      <StartAndEnd>
+      <div class="details-top-box" :style="playValue1 ? {display: 'none'} : {display: 'block'}">
         <div class="app-base">
           <div class="app-pic"><img :src="iconUrl" alt=""></div>
           <div class="app-info">
@@ -20,23 +18,22 @@
           <div class="play-fill"></div>
         </button>
       </div>
-      <div class="details-seo-box">
+      <div class="details-seo-box" :style="playValue1 ? {display: 'none'} : {display: 'block'}">
         <div class="desc-item">
           <div class="desc-title">{{ gameName }}</div>
-          <div class="desc-text">{{ iconUrl }}</div>
+          <div class="desc-text">{{ description }}</div>
         </div>
         <div class="seo-tags">
-          <a class="seo-tag" style="color: #f5b417">Obstacle Games</a>
-          <a class="seo-tag" style="color: #54abd7">Adventure Games</a>
-          <a class="seo-tag" style="color: #ff6215">Action Games</a>
+          <a class="seo-tag" :style="index % 2 == 0 ? 'color: #f5b417' : index % 3 == 0 ? 'color: #54abd7' : 'color: #ff6215'" v-for="(item,index) in typeList" :key="index">{{ item.name }}</a>
         </div>
       </div>
-      <div class="details-recommend-box">
+      <div class="details-recommend-box" :style="playValue1 ? {display: 'none'} : {display: 'block'}">
         <p class="recommend-title">Recommendations for similar games</p>
         <div class="recommend-list">
           <ClassList styleType="1" :gameTypeList="gameTypeList"></ClassList>
         </div>
       </div>
+      </StartAndEnd>
     </div>
     <div class="app-module" :style="playValue ? {display: 'block'} : {display: 'none'}" v-if="playValue">
       <div class="app-iframe">
@@ -58,24 +55,25 @@
 </template>
 
 <script>
-import img6 from '@/assets/06.webp';
 import ClassList from "@/components/MobileTerminal/MobileHome/ClassList";
-import { getGameInfo, getGameList, shuffle, determinePcOrMove } from "@/utils/utils";
+import StartAndEnd from "@/components/MobileTerminal/MobileHome/StartAndEnd";
+import { getGameInfo, getGameList, shuffle, determinePcOrMove, getGameType } from "@/utils/utils";
 export default {
   name: "Index",
   components: {
-    ClassList
+    ClassList,StartAndEnd
   },
   data() {
     return {
-      img6,
       gameName: '', // 游戏名称
       iconUrl: '', // 游戏icon
       description: '', // 游戏简介
       playUrl: '', // 游戏url
+      typeList: [], // 游戏分类
       gameTypeList: [], // 游戏列表
       gameShuffleList: [], // 随机列表
       playValue: false,
+      playValue1: false,
       isTop: false,
       timer: null, // 定时器
     }
@@ -94,27 +92,55 @@ export default {
   },
   mounted() {
     document.getElementById('mobile-details').addEventListener("scroll",this.handleScroll, true)
-    const { query } = this.$route
-    const { gameId } = query || {}
-    // 获取游戏详情
-    getGameInfo(gameId).then((res)=>{
-      console.log(res);
-      const { data } = res || {}
-      const { code, data:dataObj } = data || {}
-      const { gameName, iconUrl, description, playUrl, gameType } = dataObj || {}
-      if (code == 1) {
-        this.gameName = gameName
-        this.iconUrl = iconUrl
-        this.description = description
-        this.playUrl = playUrl
-        this.getGameTypeList(gameType)
-      }
-    }).catch((err)=>{
-      console.log(err);
-    })
-    this.getGameTypeList(1)
+    this.getInfo()
   },
   methods: {
+    // 获取游戏详情
+    getInfo() {
+      this.playValue1= true
+      const { query } = this.$route
+      const { gameId } = query || {}
+      // 获取游戏详情
+      getGameInfo(gameId).then((res)=>{
+        console.log(res);
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        const { gameName, iconUrl, description, playUrl, gameType } = dataObj || {}
+        if (code == 1) {
+          this.gameName = gameName
+          this.iconUrl = iconUrl
+          this.description = description
+          this.playUrl = playUrl
+          this.getGameType1(gameType)
+        }
+      }).catch((err)=>{
+        this.playValue1= false
+        console.log(err);
+      })
+    },
+    // 获取游戏类型
+    getGameType1(gameType) {
+      getGameType().then((res)=>{
+        const { data } = res || {}
+        const { code, data:dataObj } = data || {}
+        const { game_type, game_grade } = dataObj || {}
+        if (code == 1) {
+          this.typeList = game_type
+          game_type.map((item)=>{
+            if (item.name == gameType) {
+              this.getGameTypeList(item.code)
+            }
+          })
+        } else {
+          this.playValue1= false
+          this.$message.error('获取游戏类别失败')
+        }
+      }).catch((err)=>{
+        this.playValue1= false
+        console.log(err);
+      })
+    },
+
     // 获取游戏列表
     getGameTypeList(gameType) {
       // 获取游戏列表
@@ -123,9 +149,13 @@ export default {
         const { data } = res || {}
         const { code, data:dataObj } = data || {}
         if (code == 1) {
+          this.playValue1= false
           this.gameTypeList = dataObj || []
+        } else {
+          this.$message.error('数据加载失败')
         }
       }).catch((err)=>{
+        this.playValue1= false
         console.log(err);
       })
     },
@@ -171,6 +201,12 @@ export default {
         }
       },()=>{})
       this.playValue = false
+    }
+  },
+  watch: {
+    '$route'(val) {
+      console.log(val,'数据更新了');
+      this.getInfo()
     }
   }
 }
