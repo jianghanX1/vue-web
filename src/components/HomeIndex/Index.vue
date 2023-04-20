@@ -9,7 +9,7 @@
     <div class="recent-game">
       <div class="title">Recent game</div>
       <div class="content">
-        <div class="item" v-for="(item,index) in recentGameList" :key="index"><img :src="item.iconUrl" alt=""></div>
+        <div class="item" v-for="(item,index) in recentGameList" :key="index" @click="iconClick(item)"><img :src="item.iconUrl" alt=""></div>
       </div>
     </div>
   </div>
@@ -56,6 +56,15 @@ export default {
         console.log(err);
       })
     },
+    // 点击跳转详情
+    iconClick(item) {
+      this.$router.push({
+        path: '/P/details',
+        query: {
+          gameId: item.gameId
+        }
+      })
+    }
   }
 }
 </script>
