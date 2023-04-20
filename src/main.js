@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import { Button, Select, Input, Message } from 'element-ui'
+import './registerServiceWorker'
 
 Vue.prototype.$axios = axios
 Vue.prototype.$message = Message

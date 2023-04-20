@@ -6,6 +6,17 @@ const path = require('path')
 console.info(process.env.ENV_PATH,"====");
 let rootApi = process.env.ENV_PATH === 'pro' ? 'https://ah5game.com/' : 'http://game.afantai.com/'
 module.exports = {
+  pwa: {
+    workboxOptions: {
+      // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+      skipWaiting: true,
+      clientsClaim: true,
+      importWorkboxFrom: 'local',
+      importsDirectory: 'js',
+      navigateFallback: '/',
+      navigateFallbackBlacklist: [/\/api\//]
+    }
+  },
   dev: {
 
     // Paths

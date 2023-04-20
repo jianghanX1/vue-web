@@ -1,0 +1,20 @@
+{
+  "short_name": "阿凡太", // 将来展示在手机桌面应用图标下
+  "name": "阿凡太", // 将来展示在电脑桌面应用图标下
+  "icon": [
+    {
+      "src": "./img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ], // 桌面图标，是一个数组，注意图片大小和格式
+  "start_url": "index.html", // 应用启动时的url
+  "display": "standalone",
+  "background_color": "#080403",
+  "theme_color": "#080403"
+}
